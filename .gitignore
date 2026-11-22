@@ -1,0 +1,11 @@
+# Notes de travail et pages d'essai
+CLAUDE.md
+.claude/
+pistes/
+test-domaines.html
+
+# Images et vidéos : seules celles du site sont envoyées
+img/*
+!img/david-portrait.webp
+!img/geneve-footer-bleu.webp
+assets/

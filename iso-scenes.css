@@ -1,0 +1,74 @@
+﻿/* Isometric scenes (iso-scenes.js). Animations run once the wrapper gets .scene.on */
+.iso * { vector-effect: non-scaling-stroke; }
+.iso .t, .iso .l, .iso .r { stroke: #3a3a3a; stroke-width: .9; stroke-linejoin: round; }
+.iso .t { fill: #fff; }
+.iso .l { fill: #f6f6f6; }
+.iso .r { fill: #ebebeb; }
+.iso .win { fill: #eef1f7; stroke: #8c8c8c; stroke-width: .7; }
+.iso .door { fill: #dfe3ea; stroke: #3a3a3a; stroke-width: .8; }
+.iso .acc { fill: var(--blue); stroke: #1a3fb8; stroke-width: .8; stroke-linejoin: round; }
+.iso .grid { stroke: #e6e6e6; stroke-width: .6; fill: none; }
+.iso .iwire { fill: none; stroke: #6f6f6f; stroke-width: 1; stroke-linejoin: round; }
+.iso .drop { fill: none; stroke: #9a9a9a; stroke-width: 1; stroke-dasharray: 2 3; }
+.iso .ghostp { fill: none; stroke: #b4b4b4; stroke-width: .9; stroke-dasharray: 2 3; }
+.iso .pulse { fill: none; stroke: var(--blue); stroke-width: 2.2; stroke-linecap: round; vector-effect: none;
+  stroke-dasharray: .07 1.2; stroke-dashoffset: .07; animation: iso-run 3.6s linear infinite; animation-delay: var(--pd, 0s); opacity: 0; }
+.scene.on .iso .pulse { opacity: 1; }
+.iso .shadow { fill: rgba(0,0,0,.045); stroke: none; }
+.iso .trunk { stroke: #3a3a3a; stroke-width: 1; }
+.iso .crown { fill: #fff; stroke: #3a3a3a; stroke-width: .9; }
+.iso .crown2 { fill: none; stroke: #b5b5b5; stroke-width: .7; }
+.iso text { font-family: "Inter", system-ui, sans-serif; fill: #2a2a2a; }
+.iso .lbl { font-size: 5.6px; font-weight: 500; }
+.iso .ico { fill: none; stroke: #2a2a2a; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.iso .icow { stroke: #fff; stroke-width: 1.4; }
+.iso .bar { fill: #dcdcdc; }
+.iso .pf { fill: #f5f5f5; stroke: #a0a0a0; stroke-width: .6; }
+.iso .pb { fill: #eef1f7; stroke: #a0a0a0; stroke-width: .6; }
+.iso .mtn { fill: #e8ebf1; stroke: #3a3a3a; stroke-width: .7; stroke-linejoin: round; }
+.iso .accf { fill: var(--blue); }
+.iso .whitef { fill: #fff; }
+.iso .circ { fill: none; stroke: #8c8c8c; stroke-width: .7; stroke-linecap: round; stroke-linejoin: round; }
+.iso .inode { fill: #fff; stroke: #6f6f6f; stroke-width: .7; }
+.iso .ipill rect { fill: #fff; stroke: #cfcfcf; stroke-width: .8; }
+.iso .ipill text { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 6px; letter-spacing: .06em; font-weight: 500; fill: #262626; }
+/* Contenus: the three labels light up in turn (white on blue), 1.4 s each, top to bottom, in a loop */
+.scene.on .iso .ipill--cycle rect { animation: iso-hl-r 4.2s linear infinite; animation-delay: calc(var(--hl) * 1.4s + 1s); }
+.scene.on .iso .ipill--cycle text { animation: iso-hl-t 4.2s linear infinite; animation-delay: calc(var(--hl) * 1.4s + 1s); }
+@keyframes iso-hl-r { 0% { fill: #fff; stroke: #cfcfcf; } 4%, 30% { fill: var(--blue); stroke: var(--blue); } 34%, 100% { fill: #fff; stroke: #cfcfcf; } }
+@keyframes iso-hl-t { 0% { fill: #262626; } 4%, 30% { fill: #fff; } 34%, 100% { fill: #262626; } }
+.iso .lead { fill: none; stroke: #9a9a9a; stroke-width: 1; stroke-dasharray: 1.5 2.5; }
+.iso .sig { fill: none; stroke: #4a4a4a; stroke-width: .9; stroke-linecap: round; }
+.iso .stamp circle { fill: rgba(31,79,224,.07); stroke: var(--blue); stroke-width: 1.3; }
+.iso .stamp .in2 { fill: none; stroke-dasharray: 1.5 1.5; stroke-width: .8; }
+.iso .stamp path { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.iso .chart { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: none; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.iso .dot { fill: #fff; stroke: var(--blue); stroke-width: 1; }
+.iso .caret { animation: iso-blink 1s steps(1) infinite; }
+.iso .prog { transform-box: fill-box; transform-origin: left center; transform: scaleX(.15); }
+@keyframes iso-run { from { stroke-dashoffset: .07; } to { stroke-dashoffset: -1.2; } }
+@keyframes iso-blink { 50% { opacity: 0; } }
+
+/* Build-up when the card is revealed: each piece rises into place, in order */
+.iso .pc { opacity: 0; transform: translateY(8px); }
+.scene.on .iso .pc { animation: iso-rise .7s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--i) * 70ms + .2s); }
+@keyframes iso-rise { to { opacity: 1; transform: none; } }
+.iso .stamp { transform-box: fill-box; transform-origin: center; opacity: 0; }
+.scene.on .iso .stamp { animation: iso-stamp .45s cubic-bezier(.3,1.6,.5,1) forwards; animation-delay: calc(var(--i) * 70ms + .7s); }
+@keyframes iso-stamp { from { opacity: 0; transform: scale(1.8) rotate(-12deg); } to { opacity: 1; transform: scale(1) rotate(-12deg); } }
+.scene.on .iso .chart { animation: iso-draw 1.4s ease-out forwards; animation-delay: calc(var(--i) * 70ms + .6s); }
+@keyframes iso-draw { to { stroke-dashoffset: 0; } }
+.scene.on .iso .prog { animation: iso-prog 6s linear infinite; animation-delay: 1.2s; }
+@keyframes iso-prog { from { transform: scaleX(.15); } to { transform: scaleX(1); } }
+.iso .float { animation: iso-bob 4s ease-in-out infinite; }
+@keyframes iso-bob { 50% { transform: translateY(-4px); } }
+.scene:hover .iso .float { transform: translateY(-9px); animation: none; transition: transform .4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .iso .pc, .scene.on .iso .pc { animation: none; opacity: 1; transform: none; }
+  .iso .stamp, .scene.on .iso .stamp { animation: none; opacity: 1; transform: rotate(-12deg); }
+  .iso .chart, .scene.on .iso .chart { animation: none; stroke-dashoffset: 0; }
+  .iso .float, .iso .caret, .scene.on .iso .prog { animation: none; }
+  .iso .pulse { display: none; }
+  .scene.on .iso .ipill--cycle rect, .scene.on .iso .ipill--cycle text { animation: none; }
+}
